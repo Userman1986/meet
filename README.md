@@ -1,94 +1,109 @@
-Welcome to the myFlix client repository! This progressive web application (PWA) is built using React and follows a test-driven development (TDD) approach. It leverages the Google Calendar API to fetch upcoming events and offers a serverless architecture for scalability and cost-efficiency.
+Meet App
+Project Overview
+The Meet App is a serverless, progressive web application developed with React, following a test-driven development (TDD) approach. It leverages the Google Calendar API to fetch and display upcoming events. This combination of serverless architecture and PWAs provides benefits such as easy scalability, offline support, and enhanced user experience.
 
-Table of Contents
-Overview
-Key Features
 User Stories
-Technical Requirements
-Getting Started>
-Installation
-Usage
-Contributing
-License
-Overview
-Serverless architecture and PWAs (Progressive Web Apps) are at the forefront of modern web development. This project combines these concepts to create a web app that not only offers a responsive and feature-rich user experience but also benefits from serverless architecture's scalability and cost-effectiveness.
 
-The myFlix client is built using a TDD technique, ensuring code quality and test coverage. It utilizes the Google Calendar API for event data and features data visualization components to provide users with insights into upcoming events and event genres.
-
-Key Features
-Filter Events by City: Users can filter events by city to view a list of events in a specific location.
-Show/Hide Event Details: Event details can be expanded or collapsed to provide more or less information.
-Specify Number of Events: Users can specify the number of events to display at once.
-Use the App When Offline: The app can be used offline, displaying previously viewed events.
-Add an App Shortcut to the Home Screen: Supported mobile devices can add a shortcut to the home screen for quick access.
-Display Charts Visualizing Event Details: Visualizations include a scatterplot showing upcoming events in each city and a pie chart displaying event genre popularity.
-User Stories
+Feature 1: Filter Events By City
+As a user, I want to see upcoming events from all cities by default.
+As a user, I want to see suggestions when I search for a city.
+As a user, I want to be able to select a city from the suggested list.
 Feature 2: Show/Hide Event Details
-User Story 1: As a user, I would like to be able to show event details so that I can see more information about an event.
-
-Scenario 1:
-
-Given I am on the main page
-When I click on an event card
-Then the event details should expand to show additional information about the event.
-Scenario 2:
-
-Given I am on the main page with event details expanded
-When I click on the expanded event card
-Then the event details should collapse to hide additional information about the event.
+As a user, I expect event details to be collapsed by default.
+As a user, I want to expand an event to see its details.
+As a user, I want to collapse an event to hide its details.
 Feature 3: Specify Number of Events
-User Story 2: As a user, I would like to be able to specify the number of events I want to view in the app so that I can see more or fewer events in the events list at once.
-
-Scenario 1:
-
-Given I am on the main page
-When I select a number from a dropdown menu specifying the number of events to display
-Then the app should display the selected number of events in the events list.
+As a user, I want to see 32 events by default if I haven't specified a number.
+As a user, I want to change the number of events displayed.
 Feature 4: Use the App When Offline
-User Story 3: As a user, I would like to be able to use the app when offline so that I can see the events I viewed the last time I was online.
-
-Scenario 1:
-
-Given I am using the app online
-When I view a list of events
-Then the app should cache the events locally.
-Scenario 2:
-
-Given I am using the app offline
-When I open the app
-Then the app should display the locally cached events.
+As a user, I want to see cached data when there's no internet connection.
+As a user, I want to see an error when I change search settings (city, number of events) without internet.
 Feature 5: Add an App Shortcut to the Home Screen
-User Story 4: As a user, I would like to be able to add the app shortcut to my home screen so that I can open the app faster.
-
-Scenario 1:
-
-Given I am using a supported mobile device
-When I visit the app in a web browser
-Then the app should provide an option to add a shortcut to the home screen.
-Scenario 2:
-
-Given I have added the app shortcut to my home screen
-When I tap the shortcut icon
-Then the app should open in my web browser.
+As a user, I want to install the Meet app as a shortcut on my device's home screen.
 Feature 6: Display Charts Visualizing Event Details
-User Story 5: As a user, I would like to be able to see a chart showing the upcoming events in each city so that I know what events are organized in which city.
+As a user, I want to see a chart showing the number of upcoming events in each city.
 
-Scenario 1:
 
-Given I am on the main page
-When I scroll down
-Then I should see a scatterplot chart displaying the upcoming events in each city.
-User Story 6: As a user, I would like to be able to see a chart visualizing the popularity of event genres so that I can understand the distribution of event genres.
+Gherkin Scenarios
+Feature 1: Filter Events By City
 
-Scenario 2:
+Given a user who hasn’t searched for a city
+When they view upcoming events
+Then events from all cities should be shown
 
-Given I am on the main page
-When I scroll down further
-Then I should see a pie chart visualizing the popularity of event genres.
-Technical Requirements
-The app is built with React.
-TDD (Test-Driven Development) is followed.
-Google Calendar API and OAuth2 authentication flow are used.
-Serverless functions (preferably AWS Lambda) are implemented for the authorization server.
-The app's code is hosted in a GitHub repository.
-Compatibility with modern web browsers, including Chrome
+Given a user searching for a city
+When they type in the search bar
+Then a list of suggestions should be displayed
+
+Given a list of suggestions
+When a user selects a city
+Then events from that city should be shown
+
+Feature 2: Show/Hide Event Details
+
+Given an event element
+When the user sees the event
+Then the event details should be collapsed by default
+
+Given a collapsed event
+When the user clicks to expand
+Then the event details should be visible
+
+Given an expanded event
+When the user clicks to collapse
+Then the event details should be hidden
+
+Feature 3: Specify Number of Events
+
+Given a user who hasn’t specified a number
+When they view upcoming events
+Then 32 events should be shown by default
+
+Given a user specifying a number
+When they change the number of events displayed
+Then the specified number of events should be shown
+
+Feature 4: Use the App When Offline
+
+Given an internet-connected user
+When they view upcoming events
+Then the data should be loaded from the internet
+
+Given a user with cached data
+When they view upcoming events offline
+Then the cached data should be shown
+
+Given a user changing search settings offline
+When they try to change the city or number of events
+Then an error message should be displayed
+
+
+Feature 5: Add an App Shortcut to the Home Screen
+
+Given a user accessing the Meet app
+When they install the app on their device
+Then a shortcut should be added to the home screen
+
+Feature 6: Display Charts Visualizing Event Details
+
+Given a user viewing upcoming events
+When they explore the app
+Then they should see a chart showing the number of events in each city
+
+Installation and Usage
+Clone the repository: git clone https://github.com/your-username/meet-app.git
+Install dependencies: npm install
+Run the app: npm start
+
+Technologies Used
+React
+Google Calendar API
+AWS Lambda
+GitHub Pages
+Service Worker
+Jest and React Testing Library for testing
+Chart.js for data visualization
+
+
+Acknowledgments
+The Meet App was developed as part of the achievement 4 project for the Full Stack Web Development course. It showcases the integration of serverless architecture, progressive web app features, and effective test-driven development practices.
