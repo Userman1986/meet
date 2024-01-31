@@ -1,0 +1,12 @@
+{
+    "CLIENT_ID": "831799859148-7quv5vfd6qrddvb1nmiu8qdg4rfclm6r.apps.googleusercontent.com",
+    "CLIENT_SECRET": "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",
+    "CALENDAR_ID": "fullstackwebdev@careerfoundry.com",
+    "project_id":"meet-app-400206",
+    "auth_uri":"https://accounts.google.com/o/oauth2/auth",
+    "token_uri":"https://oauth2.googleapis.com/token",
+    "redirect_uris":["https://userman1986.github.io/meet/"],
+  "javascript_origins":["https://userman1986.github.io"],
+    "auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs"
+  }
+ 
