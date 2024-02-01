@@ -1,9 +1,11 @@
 // src/components/EventList.js
 
-const EventList = () => {
-    return (
-      <div id="event-list"></div>
-    );
-  }
-  
-  export default EventList;
+import Event from "./Event";
+
+const EventList = ({ events }) => {
+  return (
+    <ul id="event-list"></ul>
+  );
+}
+
+export default EventList;
