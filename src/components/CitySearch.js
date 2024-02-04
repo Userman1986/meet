@@ -7,11 +7,12 @@ const CitySearch = ({ allLocations, setCurrentCity, setInfoAlert }) => {
 
   useEffect(() => {
     setSuggestions(allLocations);
-  }, [`${allLocations}`]);
+  }, [allLocations]);
 
   const handleInputChanged = (event) => {
     const value = event.target.value;
     const filteredLocations = allLocations ? allLocations.filter((location) => {
+      if(!location) return null; // not all events have a location 
       return location.toUpperCase().indexOf(value.toUpperCase()) > -1;
     }) : [];
     setQuery(value);

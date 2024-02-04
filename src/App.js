@@ -3,11 +3,14 @@
 import CitySearch from './components/CitySearch';
 import EventList from './components/EventList';
 import './App.css';
+import { extractLocations } from './api';
 
 const App = () => {
+  const events = getEvents();
+  const allLocations = extractLocations (events);
  return (
    <div className="App">
-     <CitySearch />
+     <CitySearch allLocations={allLocations}/>
      <EventList />
    </div>
  );
