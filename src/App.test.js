@@ -1,19 +1,32 @@
-// src/__tests__/App.test.js
+// src/App.js
 
-import { render } from '@testing-library/react';
-import App from './App';
+import { useState, useEffect } from "react";
+import CitySearch from './components/CitySearch';
+import EventList from './components/EventList';
+import './App.css';
+import { extractLocations, getEvents } from './api';
 
-describe('<App /> component', () => {
-  let AppDOM;
-  beforeEach(() => {
-    AppDOM = render(<App />).container.firstChild;
-  })
+const App = () => {
+  const [allLocations, setAllLocations] = useState([]);
 
-  test('renders list of events', () => {
-    expect(AppDOM.querySelector('#event-list')).toBeInTheDocument();
-  });
+  const getAllLocations = async () => {
+    const allEvents = await getEvents();
+    const locations = extractLocations(allEvents[0].items);
+    return locations;
+  }
 
-  test('render CitySearch', () => {
-    expect(AppDOM.querySelector('#city-search')).toBeInTheDocument();
-  });
-});
+  useEffect(() => {
+    getAllLocations().then((locations) => {
+      setAllLocations(locations);
+    });
+  }, []);
+
+  return (
+    <div className="App">
+      <CitySearch allLocations={allLocations} />
+      <EventList />
+    </div>
+  );
+}
+
+export default App;
