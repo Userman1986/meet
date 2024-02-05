@@ -1,52 +1,35 @@
 // src/App.js
 
-import { useState, useEffect } from "react";
 import CitySearch from './components/CitySearch';
 import EventList from './components/EventList';
 import NumberOfEvents from './components/NumberOfEvents';
-import './App.css';
+import { useEffect, useState } from 'react';
 import { extractLocations, getEvents } from './api';
 
+import './App.css';
+
 const App = () => {
+  const [events, setEvents] = useState([]);
+  const [currentNOE, setCurrentNOE] = useState(32);
+  const [allLocations, setAllLocations] = useState([]);
 
-const[allLocations, setAllLocations] = useState([]);
-const getAllLocations = async () => {
-const allEvents = await gerEvents ();
-const locations = extractLocations (allEvents[0].items);
-const [events, setEvents] = useState([]);
-const [currentNOE, setCurrentNOE] = useState(32);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-const fetchData = async () => {
-  const allEvents = await getEvents();
-  setEvents(allEvents.slice(0, currentNOE));
-}
+  const fetchData = async () => {
+    const allEvents = await getEvents();
+    setEvents(allEvents.slice(0, currentNOE));
+    setAllLocations(extractLocations(allEvents));
+  }
 
-return locations;
-}
-
-useEffect(() => {
-  fetchData();
-}, []);
-
-
-useEffect (() => {
-getAllLocations().then((locations) =>{
-  setAllLocations(locations)
-});
-
-
-
-}, [] );
-
-
-
-return (
-  <div className="App">
-    <CitySearch />
-    <NumberOfEvents />
-    <EventList events={events} />
-  </div>
-);
+  return (
+    <div className="App">
+      <CitySearch allLocations={allLocations} />
+      <NumberOfEvents />
+      <EventList events={events}/>
+    </div>
+  );
 }
 
 export default App;
