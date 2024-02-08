@@ -32,15 +32,14 @@ describe('<App /> integration', () => {
     const berlinSuggestionItem = within(AppComponent.container).queryByText('Berlin, Germany');
     await user.click(berlinSuggestionItem);
     const allRenderedEventItems = within(AppComponent.container).queryAllByRole('listitem');
-  
+
     const allEvents = await getEvents();
-    const berlinEvents = allEvents.filter(event => event.location.includes('Berlin'));
-  
+    const berlinEvents = allEvents.filter(event => event.location?.includes('Berlin'));
+
     expect(allRenderedEventItems.length).toBe(berlinEvents.length);
-  
+
     allRenderedEventItems.forEach(event => {
       expect(event.textContent).toContain("Berlin, Germany");
     });
   });
-  
 });
