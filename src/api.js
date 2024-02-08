@@ -1,10 +1,10 @@
 import mockData from './mock-data';
 
-// removeQuery function
+
 const removeQuery = () => {
   let newurl;
   if (window.history.pushState && window.location.pathname) {
-    newurl = 
+    newurl =
       window.location.protocol +
       "//" +
       window.location.host +
@@ -16,7 +16,7 @@ const removeQuery = () => {
   }
 };
 
-// getToken  function
+
 const getToken = async (code) => {
   const encodeCode = encodeURIComponent(code);
   const response = await fetch(
@@ -28,21 +28,14 @@ const getToken = async (code) => {
   return access_token;
 };
 
-/**
- *
- * @param {*} events:
- * The following function should be in the “api.js” file.
- * This function takes an events array, then uses map to create a new array with only locations.
- * It will also remove all duplicates by creating another new array using the spread operator and spreading a Set.
- * The Set will remove all duplicates from the array.
- */
+
 export const extractLocations = (events) => {
   const extractedLocations = events.map((event) => event.location);
   const locations = [...new Set(extractedLocations)];
   return locations;
 };
 
-// checkToken function
+
 const checkToken = async (accessToken) => {
   const response = await fetch(
     `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`
@@ -52,32 +45,43 @@ const checkToken = async (accessToken) => {
 };
 
 
-// This function will fetch the list of all events
 export const getEvents = async () => {
+  
   if (window.location.href.startsWith('http://localhost')) {
     return mockData;
   }
 
+
   if (!navigator.onLine) {
     const events = localStorage.getItem("lastEvents");
-    return events?JSON.parse(events):[];
+    return events ? JSON.parse(events) : [];
   }
 
+
   const token = await getAccessToken();
+
 
   if (token) {
     removeQuery();
     const url = "https://8m8pi7mn1j.execute-api.eu-central-1.amazonaws.com/dev/api/get-events" + "/" + token;
     const response = await fetch(url);
     const result = await response.json();
-    if (result) {
+    if (result && result.events) {
+      
       localStorage.setItem("lastEvents", JSON.stringify(result.events));
-      return result.events;
-    } else return null;
+     
+      const eventsWithLocation = result.events.map(event => ({
+        ...event,
+        location: event.location || 'Location not specified' 
+      }));
+      return eventsWithLocation;
+    } else {
+      return null;
+    }
   }
 };
 
-// Getting the Access Token
+
 export const getAccessToken = async () => {
   const accessToken = localStorage.getItem('access_token');
 
@@ -97,5 +101,5 @@ export const getAccessToken = async () => {
     }
     return code && getToken(code);
   }
-  return accessToken
+  return accessToken;
 };
