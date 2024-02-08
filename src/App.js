@@ -16,7 +16,6 @@ const App = () => {
   useEffect(() => {
     fetchData();
   }, [currentCity, currentNOE]); 
-
   const fetchData = async () => {
     try {
       const allEvents = await getEvents();
@@ -32,6 +31,7 @@ const App = () => {
       setErrorAlert("Error fetching data. Please try again."); 
     }
   };
+  
 
   const handleInfoAlert = (message) => {
     setInfoAlert(message);
