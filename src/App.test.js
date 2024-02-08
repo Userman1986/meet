@@ -34,7 +34,10 @@ describe('<App /> integration', () => {
     const allRenderedEventItems = within(AppComponent.container).queryAllByRole('listitem');
 
     const allEvents = await getEvents();
+    console.log('All events:', allEvents);
+
     const berlinEvents = allEvents.filter(event => event.location?.includes('Berlin'));
+    console.log('Berlin events:', berlinEvents);
 
     expect(allRenderedEventItems.length).toBe(berlinEvents.length);
 
