@@ -36,7 +36,10 @@ describe('<App /> integration', () => {
     const allEvents = await getEvents();
     console.log('All events:', allEvents);
 
-    const berlinEvents = allEvents.filter(event => event.location?.includes('Berlin'));
+    const berlinEvents = allEvents.filter(event => {
+      console.log('Event location:', event.location);
+      return event.location?.includes('Berlin');
+    });
     console.log('Berlin events:', berlinEvents);
 
     expect(allRenderedEventItems.length).toBe(berlinEvents.length);
