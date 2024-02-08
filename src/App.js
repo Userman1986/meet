@@ -14,19 +14,23 @@ const App = () => {
   const [errorAlert, setErrorAlert] = useState("");
   const [infoAlert, setInfoAlert] = useState("");
 
-  useEffect(() => {
-    fetchData();
-  }, [currentCity, currentNOE]);
-
   const fetchData = async () => {
-    const allEvents = await getEvents();
-    const filteredEvents = currentCity === "See all cities" ?
-      allEvents :
-      allEvents.filter(event => event.location === currentCity)
-    setEvents(filteredEvents.slice(0, currentNOE));
-    setAllLocations(extractLocations(allEvents));
-  }
+    try {
+        const allEvents = await getEvents();
+        const filteredEvents = currentCity === "See all cities" ?
+            allEvents[0].items :
+            allEvents[0].items.filter(event => event.location === currentCity);
+        setEvents(filteredEvents.slice(0, currentNOE));
+        setAllLocations(extractLocations(allEvents));
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        
+    }
+}
 
+
+
+  
   return (
     <div className="App">
       <CitySearch
