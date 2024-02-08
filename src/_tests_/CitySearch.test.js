@@ -5,30 +5,29 @@ import App from '../App';
 import { extractLocations, getEvents } from '../api';
 
 describe('<CitySearch /> component', () => {
-    let CitySearchComponent;
-    beforeEach(() => {
-        CitySearchComponent = render(<CitySearch allLocations={[]} setCurrentCity={() => { }} setInfoAlert={() => { }} />);
+  let CitySearchComponent;
+  beforeEach(() => {
+    CitySearchComponent = render(<CitySearch allLocations={[]} setCurrentCity={() => {}} setInfoAlert={() => {}} />);
+  });
+
+  describe('<CitySearch /> integration', () => {
+
+    test('renders suggestions list when the app is rendered.', async () => {
+      const AppComponent = render(<App />);
+      const AppDOM = AppComponent.container;
+
+      const CitySearchDOM = AppDOM.querySelector('#city-search');
+      const cityTextBox = within(CitySearchDOM).queryByRole('textbox');
+      await userEvent.click(cityTextBox);
+
+      const allEvents = await getEvents();
+      const allLocations = extractLocations(allEvents);
+
+      const suggestionListItems = within(CitySearchDOM).queryAllByRole('listitem');
+      expect(suggestionListItems.length).toBe(allLocations.length + 1);
     });
 
-    describe('<CitySearch /> integration', () => {
-
-        test('renders suggestions list when the app is rendered.', async () => {
-            const user = userEvent.setup();
-            const AppComponent = render(<App />);
-            const AppDOM = AppComponent.container;
-
-            const CitySearchDOM = AppDOM.querySelector('#city-search');
-            const cityTextBox = within(CitySearchDOM).queryByRole('textbox');
-            await user.click(cityTextBox);
-
-            const allEvents = await getEvents();
-            const allLocations = extractLocations(allEvents);
-
-            const suggestionListItems = within(CitySearchDOM).queryAllByRole('listitem');
-            expect(suggestionListItems.length).toBe(allLocations.length + 1);
-        });
-
-    });
+  });
 
     test('renders text input', () => {
         const cityTextBox = CitySearchComponent.queryByRole('textbox');
