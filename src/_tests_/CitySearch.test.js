@@ -7,7 +7,7 @@ import { extractLocations, getEvents } from '../api';
 describe('<CitySearch /> component', () => {
   let CitySearchComponent;
   beforeEach(() => {
-    CitySearchComponent = render(<CitySearch allLocations={[]} setCurrentCity={() => {}} setInfoAlert={() => {}} />);
+    CitySearchComponent = render(<CitySearch allLocations={[]} setCurrentCity={() => {}} />);
   });
 
   describe('<CitySearch /> integration', () => {
@@ -52,7 +52,7 @@ describe('<CitySearch /> component', () => {
     test('updates list of suggestions correctly when user types in city textbox', async () => {
         const allEvents = await getEvents();
         const allLocations = extractLocations(allEvents[0].items);
-        CitySearchComponent.rerender(<CitySearch allLocations={allLocations} setInfoAlert={() => { }} />);
+        CitySearchComponent.rerender(<CitySearch allLocations={allLocations} />);
 
         // user types "Berlin" in city textbox
         const user = userEvent.setup();

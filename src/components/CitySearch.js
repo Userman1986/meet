@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+// CitySearch.js
+import React, { useState, useEffect } from "react";
 
-const CitySearch = ({ allLocations, setCurrentCity, setInfoAlert }) => {
+const CitySearch = ({ allLocations, setCurrentCity }) => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
@@ -11,27 +12,24 @@ const CitySearch = ({ allLocations, setCurrentCity, setInfoAlert }) => {
 
   const handleInputChanged = (event) => {
     const value = event.target.value;
-    const filteredLocations = allLocations ? allLocations.filter((location) => {
-      if (!location) return null; // not all events have a location 
+    const filteredLocations = value ? allLocations.filter((location) => {
+      if (!location) return null; 
       return location.toUpperCase().indexOf(value.toUpperCase()) > -1;
     }) : [];
     setQuery(value);
     setSuggestions(filteredLocations);
 
-    // Alerts
-    let infoText = "";
-    if (filteredLocations.length === 0) {
-      infoText = "We can not find the city you are looking for. Please try another city";
-    }
-    setInfoAlert(infoText);
+   
+   
+   
   };
 
   const handleItemClicked = (event) => {
     const value = event.target.textContent;
     setQuery(value);
-    setShowSuggestions(false); // to hide the list
+    setShowSuggestions(false); 
     setCurrentCity(value);
-    setInfoAlert("");
+    
   };
 
   return (
@@ -44,16 +42,15 @@ const CitySearch = ({ allLocations, setCurrentCity, setInfoAlert }) => {
         onFocus={() => setShowSuggestions(true)}
         onChange={handleInputChanged}
       />
-      {showSuggestions ?
+      {showSuggestions && query &&
         <ul className="suggestions">
-          {suggestions.map((suggestion, index) => (
-            <li onClick={handleItemClicked} key={index}>{suggestion}</li>
+          {suggestions.map((suggestion) => (
+            <li onClick={handleItemClicked} key={suggestion}>{suggestion}</li>
           ))}
           <li key='See all cities' onClick={handleItemClicked}>
             <b>See all cities</b>
           </li>
         </ul>
-        : null
       }
     </div>
   )
