@@ -21,11 +21,12 @@ const App = () => {
     try {
       const allEvents = await getEvents();
       let filteredEvents = allEvents[0]?.items || [];
+      setAllLocations(extractLocations(filteredEvents));
       if (currentCity !== "See all cities") {
         filteredEvents = filteredEvents.filter(event => event.location === currentCity);
       }
       setEvents(filteredEvents.slice(0, currentNOE));
-      setAllLocations(extractLocations(allEvents));
+     
       setErrorAlert(""); // Clear any previous error alerts
     } catch (error) {
       console.error("Error fetching data:", error);
