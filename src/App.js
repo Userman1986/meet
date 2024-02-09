@@ -22,7 +22,7 @@ const App = () => {
       const allEvents = await getEvents();
       const extractedEvents = allEvents[0].items || []; 
       setEvents(extractedEvents.slice(0, currentNOE));
-      setAllLocations(extractLocations(allEvents)); 
+      setAllLocations(extractLocations(filteredEvents)); 
       setErrorAlert(""); 
     } catch (error) {
       console.error("Error fetching data:", error);

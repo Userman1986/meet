@@ -34,6 +34,7 @@ describe('<App /> integration', () => {
     const allRenderedEventItems = within(AppComponent.container).queryAllByRole('listitem');
 
     const allEvents = await getEvents();
+    
     console.log('All events:', allEvents);
 
     const berlinEvents = allEvents.filter(event => {
