@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import CitySearch from './components/CitySearch';
 import EventList from './components/EventList';
 import NumberOfEvents from './components/NumberOfEvents';
-import { getEvents } from './api';
+import { extractLocations, getEvents } from './api';
 import './App.css';
 
 const App = () => {
@@ -16,25 +16,29 @@ const App = () => {
   useEffect(() => {
     fetchData();
   }, [currentCity, currentNOE]); 
-
   const fetchData = async () => {
     try {
       const allEvents = await getEvents();
+<<<<<<< HEAD
       const extractedEvents = allEvents[0].items || []; 
       setEvents(extractedEvents.slice(0, currentNOE));
       setAllLocations(extractLocations(filteredEvents)); 
       setErrorAlert(""); 
+=======
+      let filteredEvents = allEvents[0]?.items || [];
+      if (currentCity !== "See all cities") {
+        filteredEvents = filteredEvents.filter(event => event.location && event.location.includes(currentCity));
+      }
+      setEvents(filteredEvents.slice(0, currentNOE));
+      setAllLocations(extractLocations(allEvents));
+      setErrorAlert(""); // Clear any previous error alerts
+>>>>>>> parent of 7caabdd (fff)
     } catch (error) {
       console.error("Error fetching data:", error);
       setErrorAlert("Error fetching data. Please try again."); 
     }
   };
-
-  const extractLocations = (events) => {
-    const extractedLocations = events.map((event) => event.location);
-    const locations = [...new Set(extractedLocations)];
-    return locations;
-  };
+  
 
   const handleInfoAlert = (message) => {
     setInfoAlert(message);
