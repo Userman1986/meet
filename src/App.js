@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { extractLocations, getEvents } from './api';
+import './App.css';
 import CitySearch from './components/CitySearch';
 import EventList from './components/EventList';
 import NumberOfEvents from './components/NumberOfEvents';
-import { extractLocations, getEvents } from './api';
-import './App.css';
 
 const App = () => {
   const [events, setEvents] = useState([]);
@@ -21,11 +21,13 @@ const App = () => {
     try {
       const allEvents = await getEvents();
       let filteredEvents = allEvents[0]?.items || [];
+      
+      // set locations from all events before filtering by city in the next step
+      setAllLocations(extractLocations(filteredEvents));
       if (currentCity !== "See all cities") {
         filteredEvents = filteredEvents.filter(event => event.location === currentCity);
       }
       setEvents(filteredEvents.slice(0, currentNOE));
-      setAllLocations(extractLocations(allEvents));
       setErrorAlert(""); // Clear any previous error alerts
     } catch (error) {
       console.error("Error fetching data:", error);
