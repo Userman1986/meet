@@ -1,9 +1,9 @@
-import { loadFeature, defineFeature } from 'jest-cucumber';
 import { render, waitFor, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { defineFeature, loadFeature } from 'jest-cucumber';
+import { getEvents } from '../api';
 import App from '../App';
 import Event from '../components/Event';
-import { getEvents } from '../api';
-import userEvent from '@testing-library/user-event';
 
 const feature = loadFeature('./src/features/showHideAnEventsDetails.feature');
 
@@ -11,6 +11,7 @@ defineFeature(feature, test => {
     // Scenario 1
     test('When the details of an event are hidden by default.', ({ given, when, then }) => {
         let AppComponent;
+        // TODO: you only have 15 events in your mock-data.js file, so you need to change the number of events in the test to 15
         given('the main page is open', () => {
             AppComponent = render(<App />);
         });
