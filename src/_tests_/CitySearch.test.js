@@ -1,8 +1,8 @@
 import { render, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import CitySearch from '../components/CitySearch';
-import App from '../App';
 import { extractLocations, getEvents } from '../api';
+import App from '../App';
+import CitySearch from '../components/CitySearch';
 
 describe('<CitySearch /> component', () => {
     let CitySearchComponent;
@@ -13,6 +13,9 @@ describe('<CitySearch /> component', () => {
     describe('<CitySearch /> integration', () => {
 
         test('renders suggestions list when the app is rendered.', async () => {
+            /* 
+            TODO: this is failing because the suggestions list is not opened when the website runs. npm start then check it yourself. Fix it in the UI then run the test again.
+            */
             const user = userEvent.setup();
             const AppComponent = render(<App />);
             const AppDOM = AppComponent.container;
@@ -42,6 +45,9 @@ describe('<CitySearch /> component', () => {
     });
 
     test('renders a list of suggestions when city textbox gains focus', async () => {
+        /* 
+            TODO: this is failing because the suggestions list is not opened if you click on the city search input, run your website and check it yourself. Fix it in the UI then run the test again.
+        */
         const user = userEvent.setup();
         const cityTextBox = CitySearchComponent.queryByRole('textbox');
         await user.click(cityTextBox);

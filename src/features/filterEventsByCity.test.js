@@ -1,9 +1,10 @@
-import { loadFeature, defineFeature } from 'jest-cucumber';
-import { render, within, waitFor } from '@testing-library/react';
+import { render, waitFor, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { defineFeature, loadFeature } from 'jest-cucumber';
 import App from '../App';
 import { getEvents } from '../mock-data';
-import userEvent from '@testing-library/user-event';
 
+// Tature is empty, please follow the instructionsODO: filterEventsByCity.fe
 const feature = loadFeature('./src/features/filterEventsByCity.feature');
 
 defineFeature(feature, test => {
